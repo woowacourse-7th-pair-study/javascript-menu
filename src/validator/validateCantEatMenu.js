@@ -5,6 +5,9 @@ import { throwWoowaError } from '../util/error.js';
 export const validateCantEatMenu = (menus) => {
   if (menus.length > 2) throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
 
+  if (menus.length === 2 && menus[0] === menus[1])
+    throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuDuplicate);
+
   menus.forEach((menu) => {
     const allMenu = Object.values(SAMPLE).reduce(
       (acc, cur) => acc.concat(cur.split(',').map((item) => item.trim())),
