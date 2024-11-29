@@ -1,3 +1,4 @@
+import { DAYS } from '../constant/days.js';
 import MenuRecommendMachine from '../Model/MenuRecommendMachine.js';
 import { validateCantEatMenu } from '../validator/validateCantEatMenu.js';
 import { validateCoachNames } from '../validator/validateCoachNames.js';
@@ -5,6 +6,9 @@ import Input from '../View/Input.js';
 import Output from '../View/Output.js';
 
 class Controller {
+  #menuRecommendMachine;
+  #result = {};
+
   async start() {
     this.#printStart();
 
@@ -12,12 +16,11 @@ class Controller {
 
     const cantEatMenu = await this.#getValidatedCantEatMenu(coachNames);
 
-    const menuRecommendMachine = new MenuRecommendMachine(coachNames);
-    coachNames.forEach((name) => {
-      menuRecommendMachine.chooseRecommendMenu(name, cantEatMenu[name]);
-    });
+    this.#menuRecommendMachine = new MenuRecommendMachine(coachNames);
 
-    this.#printResult();
+    this.#recommendMenuPerCoach(coachNames, cantEatMenu);
+
+    this.#printResult(coachNames);
   }
 
   #printStart() {
@@ -50,9 +53,28 @@ class Controller {
     return cantEatMenus;
   }
 
-  #printResult() {
+  #recommendMenuPerCoach(coachNames, cantEatMenu) {
+    coachNames.forEach((name) => {
+      this.#result[name] = [];
+    });
+
+    DAYS.forEach(() => {
+      coachNames.forEach((name) => {
+        const recommendedMenu = this.#menuRecommendMachine.chooseRecommendMenu(
+          name,
+          cantEatMenu[name],
+        );
+        this.#result[name] = [...this.#result[name], recommendedMenu];
+      });
+    });
+  }
+
+  #printResult(coachNames) {
     Output.printResultStartMessage();
     Output.printResultHeader();
+    coachNames.forEach((name) => {
+      Output.printRecommendMenuPerCoach(name, this.#result[name]);
+    });
   }
 }
 
