@@ -75,6 +75,7 @@ class Controller {
     coachNames.forEach((name) => {
       Output.printRecommendMenuPerCoach(name, this.#result[name]);
     });
+    Output.printEndMessage();
   }
 }
 

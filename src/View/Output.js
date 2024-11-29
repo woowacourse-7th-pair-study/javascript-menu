@@ -18,6 +18,10 @@ class Output {
   static printRecommendMenuPerCoach(coachName, result) {
     Console.print(`[ ${coachName} | ${result.join(' | ')} ]`);
   }
+
+  static printEndMessage() {
+    Console.print(CONSOLE_MESSAGE.programEndMessage);
+  }
 }
 
 export default Output;
