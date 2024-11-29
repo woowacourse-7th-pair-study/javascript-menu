@@ -16,6 +16,8 @@ class Controller {
     coachNames.forEach((name) => {
       menuRecommendMachine.chooseRecommendMenu(name, cantEatMenu[name]);
     });
+
+    this.#printResult();
   }
 
   #printStart() {
@@ -46,6 +48,10 @@ class Controller {
     }
 
     return cantEatMenus;
+  }
+
+  #printResult() {
+    Output.printResultStartMessage();
   }
 }
 

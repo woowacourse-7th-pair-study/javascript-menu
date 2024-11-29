@@ -5,6 +5,10 @@ class Output {
   static printStartMessage() {
     Console.print(CONSOLE_MESSAGE.startMessage);
   }
+
+  static printResultStartMessage() {
+    Console.print(CONSOLE_MESSAGE.resultStartMessage);
+  }
 }
 
 export default Output;
