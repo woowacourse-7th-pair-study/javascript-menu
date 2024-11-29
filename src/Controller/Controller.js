@@ -7,7 +7,7 @@ class Controller {
   start() {
     this.#printStart();
 
-    this.#getValidatedCoachNames();
+    const coachNames = this.#getValidatedCoachNames();
   }
 
   #printStart() {
@@ -17,16 +17,21 @@ class Controller {
   #getValidatedCoachNames() {
     Input.getCoachNames()((input) => {
       const names = input.split(',').map((name) => name.trim());
+      this.#validateCoachNames(names);
 
-      if (names.length < 2 || names.length > 5)
-        throwWoowaError(ERROR_MESSAGE.invalidCoachNumberOfPeople);
+      return names;
+    });
+  }
 
-      if (new Set(names).size !== names.length)
-        throwWoowaError(ERROR_MESSAGE.invalidCoachNameDuplicate);
+  #validateCoachNames(names) {
+    if (names.length < 2 || names.length > 5)
+      throwWoowaError(ERROR_MESSAGE.invalidCoachNumberOfPeople);
 
-      names.forEach((name) => {
-        this.#validateEachName(name);
-      });
+    if (new Set(names).size !== names.length)
+      throwWoowaError(ERROR_MESSAGE.invalidCoachNameDuplicate);
+
+    names.forEach((name) => {
+      this.#validateEachName(name);
     });
   }
 
