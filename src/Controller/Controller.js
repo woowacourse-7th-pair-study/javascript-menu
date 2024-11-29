@@ -1,5 +1,7 @@
 import { DAYS } from '../constant/days.js';
 import MenuRecommendMachine from '../Model/MenuRecommendMachine.js';
+import { parseCantEatMenuInput } from '../parser/parseCantEatMenuInput.js';
+import { parseCoachNamesInput } from '../parser/parseCoachNamesInput.js';
 import { validateCantEatMenu } from '../validator/validateCantEatMenu.js';
 import { validateCoachNames } from '../validator/validateCoachNames.js';
 import Input from '../View/Input.js';
@@ -30,7 +32,7 @@ class Controller {
 
   #getValidatedCoachNames() {
     return Input.getCoachNames()((input) => {
-      const names = input.split(',').map((name) => name.trim());
+      const names = parseCoachNamesInput(input);
       validateCoachNames(names);
 
       return names;
@@ -41,13 +43,11 @@ class Controller {
     const cantEatMenus = {};
     for (const name of coachNames) {
       const cantEatMenu = await Input.getCantEatMenu(name)((input) => {
-        if (input === '') return [];
-        const cantEatMenuArray = input.split(',');
-
+        const cantEatMenuArray = parseCantEatMenuInput(input);
         validateCantEatMenu(cantEatMenuArray);
+
         return cantEatMenuArray;
       });
-
       cantEatMenus[name] = cantEatMenu;
     }
 
