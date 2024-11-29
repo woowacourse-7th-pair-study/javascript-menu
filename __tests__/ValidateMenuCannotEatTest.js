@@ -1,4 +1,5 @@
 import validateMenuCannotEat from '../src/utils/validateMenuCannotEat.js';
+import { ERROR_MESSAGES } from '../src/constants/constants.js';
 
 describe('validateMenuCannotEat 메서드 테스트', () => {
   const allMenus = [
@@ -27,9 +28,9 @@ describe('validateMenuCannotEat 메서드 테스트', () => {
 
   test.each([
     // given
-    [ '메뉴가 0 ~ 2개 사이가 아닌 경우', [ '쌈밥', '나시고렝', '끼슈', '뇨끼' ], '[ERROR] 각 코치별 못 먹는 메뉴 개수는 0 ~ 2개 사이여야 합니다. 다시 입력해 주세요.'],
-    [ '메뉴 이름이 중복되는 경우', [ '스시', '스시' ], '[ERROR] 메뉴 이름은 중복될 수 없습니다. 다시 입력해 주세요.'],
-    [ '존재하지 않는 메뉴인 경우', [ '없는 메뉴' ], '[ERROR] 존재하지 않는 메뉴입니다. 다시 입력해 주세요.'],
+    [ '메뉴가 0 ~ 2개 사이가 아닌 경우', [ '쌈밥', '나시고렝', '끼슈', '뇨끼' ], ERROR_MESSAGES.NUM_OF_MENUS],
+    [ '메뉴 이름이 중복되는 경우', [ '스시', '스시' ], ERROR_MESSAGES.DUPLICATE_MENUS],
+    [ '존재하지 않는 메뉴인 경우', [ '없는 메뉴' ], ERROR_MESSAGES.NON_EXIST],
   ])('%s', (_, menuCannotEat, errorMessage) => {
     // when & then
     expect(() => {
