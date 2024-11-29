@@ -1,13 +1,15 @@
-const MissionUtils = require('@woowacourse/mission-utils');
-const App = require('../src/App');
+import App from '../src/App.js';
+import { MissionUtils } from '@woowacourse/mission-utils';
+import mockShuffles from '../src/utils/mockShuffles.js';
 
-const mockQuestions = (answers) => {
-	MissionUtils.Console.readLine = jest.fn();
-	answers.reduce((acc, input) => {
-		return acc.mockImplementationOnce((_, callback) => {
-			callback(input);
-		});
-	}, MissionUtils.Console.readLine);
+const mockQuestions = (inputs) => {
+  MissionUtils.Console.readLineAsync = jest.fn();
+
+  MissionUtils.Console.readLineAsync.mockImplementation(() => {
+    const input = inputs.shift();
+
+    return Promise.resolve(input);
+  });
 };
 
 const mockRandoms = (numbers) => {
@@ -17,19 +19,9 @@ const mockRandoms = (numbers) => {
 	}, MissionUtils.Random.pickNumberInRange);
 };
 
-const mockShuffles = (rows) => {
-	MissionUtils.Random.shuffle = jest.fn();
-
-	rows.reduce((acc, [firstNumber, numbers]) => {
-		return acc.mockReturnValueOnce([
-			firstNumber,
-			...numbers.filter((number) => number !== firstNumber),
-		]);
-	}, MissionUtils.Random.shuffle);
-};
-
 const getLogSpy = () => {
 	const logSpy = jest.spyOn(MissionUtils.Console, 'print');
+	logSpy.mockClear();
 	return logSpy;
 };
 
@@ -49,7 +41,7 @@ describe('점심 메뉴 테스트', () => {
 	});
 
 	describe('전체 기능 테스트', () => {
-		test('카테고리 메뉴 중복 없는 추천', () => {
+		test('카테고리 메뉴 중복 없는 추천', async () => {
 			const logSpy = getLogSpy();
 
 			mockRandoms([2, 5, 1, 3, 4]);
@@ -73,8 +65,9 @@ describe('점심 메뉴 테스트', () => {
 			]);
 
 			const app = new App();
-			app.play();
+			await app.run();
 			const log = getOutput(logSpy);
+			console.log(log);
 
 			expect(log.replace(/\n/g, '')).toEqual(
 				expect.stringContaining(
