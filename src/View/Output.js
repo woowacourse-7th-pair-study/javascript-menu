@@ -12,16 +12,20 @@ class Output {
   }
 
   static printResultHeader(category) {
-    Console.print(`[ 구분 | ${DAYS.join(' | ')} ]`);
-    Console.print(`[ 카테고리 | ${category.join(' | ')} ]`);
+    Console.print(this.#printResultForm('구분', DAYS));
+    Console.print(this.#printResultForm('카테고리', category));
   }
 
   static printRecommendMenuPerCoach(coachName, result) {
-    Console.print(`[ ${coachName} | ${result.join(' | ')} ]`);
+    Console.print(this.#printResultForm(coachName, result));
   }
 
   static printEndMessage() {
     Console.print(CONSOLE_MESSAGE.programEndMessage);
+  }
+
+  static #printResultForm(name, results) {
+    return `[ ${name} | ${results.join(' | ')} ]`;
   }
 }
 
