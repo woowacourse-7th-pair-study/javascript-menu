@@ -9,6 +9,11 @@ class Output {
   static printResultStartMessage() {
     Console.print(CONSOLE_MESSAGE.resultStartMessage);
   }
+
+  static printResultHeader() {
+    Console.print('[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]');
+    Console.print('[ 카테고리 | 한식 | 한식 | 일식 | 중식 | 아시안 ]');
+  }
 }
 
 export default Output;

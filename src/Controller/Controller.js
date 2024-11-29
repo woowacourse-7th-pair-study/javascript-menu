@@ -52,6 +52,7 @@ class Controller {
 
   #printResult() {
     Output.printResultStartMessage();
+    Output.printResultHeader();
   }
 }
 
