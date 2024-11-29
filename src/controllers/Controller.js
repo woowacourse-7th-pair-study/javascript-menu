@@ -19,12 +19,19 @@ class Controller {
     const coachesName = await this.#getValidatedCoachesName();
 
     const menusCannotEatByCoach = [];
-    // [ { name: '토미', menus: [ '비빔밥', '탕수육' ] }, ]
+    // 못 먹는 메뉴 리스트
+    // [ 
+    //   { name: '토미', menus: [ '비빔밥', '탕수육' ] }, 
+    //   { name: '제임스', menus: [ '우동' ] }, 
+    // ]
     for (const name of coachesName) {
       const menus = await this.#getValidatedMenuCannotEat(name);
       menusCannotEatByCoach.push({ name: name, menus: menus });
     }
+
     
+    
+    // OutputView.printResult(menusCannotEatByCoach);
   }
 
   async #getValidatedCoachesName() {
