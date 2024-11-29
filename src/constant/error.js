@@ -3,4 +3,5 @@ export const ERROR_MESSAGE = {
   invalidCoachNumberOfPeople:
     '코치의 인원수는 최소 2명, 최대 5명이어야 합니다.',
   invalidCoachNameDuplicate: '코치 이름이 중복되면 안됩니다.',
+  invalidCantEatMenuLength: '먹지 못하는 메뉴가 최소 0개, 최대 2개여야 합니다.',
 };

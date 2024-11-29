@@ -46,12 +46,22 @@ class Controller {
   async #getValidatedCantEatMenu(coachNames) {
     const cantEatMenus = [];
     for (const name of coachNames) {
-      const cantEatMenu = await Input.getCantEatMenu(name)((input) => input);
+      const cantEatMenu = await Input.getCantEatMenu(name)((input) => {
+        const cantEatMenuArray = input.split(',');
+        this.#validateCantEatMenu(cantEatMenuArray);
+
+        return cantEatMenuArray;
+      });
 
       cantEatMenus.push(cantEatMenu);
     }
 
     return cantEatMenus;
+  }
+
+  #validateCantEatMenu(menus) {
+    if (menus.length < 0 || menus.length > 2)
+      throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
   }
 }
 
