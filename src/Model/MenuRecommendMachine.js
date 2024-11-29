@@ -19,7 +19,11 @@ class MenuRecommendMachine {
   }
 
   chooseRecommendMenu(name) {
-    const randomCategory = this.#chooseRandomCategory();
+    let randomCategory = this.#chooseRandomCategory();
+
+    while (this.#eatenMenuList[name][randomCategory] === 2) {
+      randomCategory = this.#chooseRandomCategory();
+    }
 
     const menu = this.#chooseRandomMenuInCategory(randomCategory);
 
