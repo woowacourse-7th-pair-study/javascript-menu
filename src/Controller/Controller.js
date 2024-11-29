@@ -12,7 +12,7 @@ class Controller {
 
     const cantEatMenu = await this.#getValidatedCantEatMenu(coachNames);
 
-    const menuRecommendMachine = new MenuRecommendMachine();
+    const menuRecommendMachine = new MenuRecommendMachine(coachNames);
     menuRecommendMachine.chooseRandomCategory();
   }
 

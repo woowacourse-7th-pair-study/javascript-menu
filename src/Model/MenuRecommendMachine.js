@@ -1,11 +1,21 @@
-import { Random } from '@woowacourse/mission-utils';
+import { Console, Random } from '@woowacourse/mission-utils';
 import { SAMPLE } from '../App.js';
 
 class MenuRecommendMachine {
   #category;
+  #eatenMenuList = {};
 
-  constructor() {
+  constructor(coachNames) {
     this.#category = Object.keys(SAMPLE);
+    coachNames.forEach((name) => {
+      this.#eatenMenuList[name] = Object.fromEntries(
+        this.#category.map((value) => [value, []]),
+      );
+    });
+
+    Console.print(this.#category);
+
+    Console.print(this.#eatenMenuList);
   }
 
   chooseRandomCategory() {
