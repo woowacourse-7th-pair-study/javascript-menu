@@ -10,10 +10,10 @@ export const SAMPLE = {
 };
 
 class App {
-  run() {
+  async run() {
     const controller = new Controller();
 
-    controller.start();
+    await controller.start();
   }
 }
 

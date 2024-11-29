@@ -12,16 +12,15 @@ const mockQuestions = (inputs) => {
 };
 
 const mockRandoms = (numbers) => {
-  MissionUtils.Random.pickUniqueNumbersInRange = jest.fn();
+  MissionUtils.Random.pickNumberInRange = jest.fn();
   numbers.reduce(
     (acc, number) => acc.mockReturnValueOnce(number),
-    MissionUtils.Random.pickUniqueNumbersInRange,
+    MissionUtils.Random.pickNumberInRange,
   );
 };
 
 const mockShuffles = (rows) => {
   MissionUtils.Random.shuffle = jest.fn();
-
   rows.reduce(
     (acc, [firstNumber, numbers]) =>
       acc.mockReturnValueOnce([
@@ -47,12 +46,12 @@ const expectLogContains = (received, logs) => {
 };
 
 describe('점심 메뉴 테스트', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
+  beforeEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('전체 기능 테스트', () => {
-    test('카테고리 메뉴 중복 없는 추천', () => {
+    test('카테고리 메뉴 중복 없는 추천', async () => {
       const logSpy = getLogSpy();
 
       mockRandoms([2, 5, 1, 3, 4]);
@@ -62,21 +61,24 @@ describe('점심 메뉴 테스트', () => {
       mockShuffles([
         // 구구
         [2, Array.from({ length: 9 }, sequenced)],
-        [7, Array.from({ length: 9 }, sequenced)],
-        [1, Array.from({ length: 9 }, sequenced)],
-        [4, Array.from({ length: 9 }, sequenced)],
-        [2, Array.from({ length: 9 }, sequenced)],
-
         // 제임스
         [9, Array.from({ length: 9 }, sequenced)],
+
+        [7, Array.from({ length: 9 }, sequenced)],
+        [1, Array.from({ length: 9 }, sequenced)],
+
         [1, Array.from({ length: 9 }, sequenced)],
         [5, Array.from({ length: 9 }, sequenced)],
+
+        [4, Array.from({ length: 9 }, sequenced)],
         [5, Array.from({ length: 9 }, sequenced)],
+
+        [2, Array.from({ length: 9 }, sequenced)],
         [4, Array.from({ length: 9 }, sequenced)],
       ]);
 
       const app = new App();
-      app.run();
+      await app.run();
       const log = getOutput(logSpy);
 
       expect(log.replace(/\n/g, '')).toEqual(

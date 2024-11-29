@@ -55,7 +55,7 @@ class MenuRecommendMachine {
 
   #chooseRandomMenuInCategory(category) {
     const randomMenuIndex = Random.shuffle(
-      Array.from({ length: 9 }, (_, idx) => idx + 1),
+      this.#allMenu[category].map((_, index) => index + 1),
     )[0];
     return this.#allMenu[category][randomMenuIndex - 1];
   }
