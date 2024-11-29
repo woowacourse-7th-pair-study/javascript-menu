@@ -31,9 +31,10 @@ class Controller {
     const cantEatMenus = [];
     for (const name of coachNames) {
       const cantEatMenu = await Input.getCantEatMenu(name)((input) => {
+        if (input === '') return [];
         const cantEatMenuArray = input.split(',');
-        validateCantEatMenu(cantEatMenuArray);
 
+        validateCantEatMenu(cantEatMenuArray);
         return cantEatMenuArray;
       });
 

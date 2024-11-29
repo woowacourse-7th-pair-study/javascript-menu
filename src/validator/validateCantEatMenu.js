@@ -3,8 +3,7 @@ import { SAMPLE } from '../App.js';
 import { throwWoowaError } from '../util/error.js';
 
 export const validateCantEatMenu = (menus) => {
-  if (menus.length < 0 || menus.length > 2)
-    throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
+  if (menus.length > 2) throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
 
   menus.forEach((menu) => {
     const allMenu = Object.values(SAMPLE).reduce(
