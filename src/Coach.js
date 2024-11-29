@@ -37,6 +37,8 @@ class Coach {
       throw new Error(ERROR_MESSAGE.unavailableMenuCountOverMax);
     }
   }
+
+  pickMenu(options) {}
 }
 
 module.exports = Coach;

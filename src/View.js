@@ -40,7 +40,7 @@ const View = {
         try {
           suggestManager.setCoachUnavailableMenus(coachNames[i], menu);
           if (coachNames[++i]) this.readUnavailableMenus(i);
-          return;
+          else suggestManager.pickMenus();
         } catch (error) {
           this.printMessage(error.message);
           this.readUnavailableMenus();

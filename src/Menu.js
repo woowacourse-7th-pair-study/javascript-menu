@@ -1,3 +1,5 @@
+const { Random } = require('@woowacourse/mission-utils/');
+
 const SAMPLE = {
   일식: '규동, 우동, 미소시루, 스시, 가츠동, 오니기리, 하이라이스, 라멘, 오코노미야끼',
   한식: '김밥, 김치찌개, 쌈밥, 된장찌개, 비빔밥, 칼국수, 불고기, 떡볶이, 제육볶음',
@@ -11,11 +13,17 @@ class Menu {
   #menus;
 
   constructor() {
-    const menuMap = Object.entries(SAMPLE).map(([category, menuNames], i) => {
-      const menus = menuNames.split(',').map((name) => name.trim());
-      return [i + 1, { category, menus }];
-    });
+    const menuMap = Object.entries(SAMPLE).map(
+      ([categoryName, menuNames], i) => {
+        const menus = menuNames.split(',').map((name) => name.trim());
+        return [i + 1, { categoryName, menus }];
+      },
+    );
     this.#menus = new Map(menuMap);
+  }
+
+  pickCategories() {
+    return this.#menus.get(Random.pickNumberInRange(1, 5));
   }
 }
 
