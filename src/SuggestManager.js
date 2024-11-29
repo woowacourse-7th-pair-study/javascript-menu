@@ -40,7 +40,10 @@ class SuggestManager {
   pickMenus() {
     const duplicateCount = new Map();
     for (let i = 0; i < 5; i++) {
-      const category = this.#pickCategory(duplicateCount);
+      let category = this.#pickCategory(duplicateCount);
+      while (duplicateCount.get(category) > 2) {
+        category = this.#pickCategory(duplicateCount);
+      }
 
       let coachesPick = [];
       this.#coaches.forEach((coach) => {
@@ -53,7 +56,6 @@ class SuggestManager {
         coaches: coachesPick,
       };
     }
-    console.log(this.#result);
   }
 
   #pickCategory(duplicateCount) {
@@ -68,10 +70,6 @@ class SuggestManager {
         pickedCategoryName,
         (duplicateCount.get(pickedCategoryName) ?? 0) + 1,
       );
-    }
-
-    if (duplicateCount.get(pickedCategoryName) > 2) {
-      return this.#menu.pickCategories();
     }
 
     return pickedCategory;

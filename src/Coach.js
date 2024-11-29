@@ -1,3 +1,4 @@
+const { Random } = require('@woowacourse/mission-utils/');
 const { ERROR_MESSAGE } = require('./constants/errorMessage');
 const { isLengthOverMin, isLengthUnderMax } = require('./utils/validationUtil');
 const { splitString } = require('./utils/commonUtil');
@@ -38,7 +39,18 @@ class Coach {
     }
   }
 
-  pickMenu(options) {}
+  pickMenu(options) {
+    const numberArray = Array.from({ length: options.length }, (v, i) => i);
+    let selectedMenuIndex = Random.shuffle(numberArray)[0];
+    let selectedMenu = options[selectedMenuIndex];
+
+    while (this.#unavailableMenus.includes(selectedMenu)) {
+      selectedMenuIndex = Random.shuffle(numberArray)[0];
+      selectedMenu = options[selectedMenuIndex];
+    }
+
+    return selectedMenu;
+  }
 }
 
 module.exports = Coach;
