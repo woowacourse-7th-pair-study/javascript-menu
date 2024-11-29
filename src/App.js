@@ -1,3 +1,4 @@
+const Coach = require('./Coach.js');
 const View = require('./View.js');
 
 const SAMPLE = {
@@ -12,6 +13,11 @@ const SAMPLE = {
 class App {
   play() {
     View.printStartMessage();
+
+    const coachNamesInput = View.readCoachName();
+    const coaches = coachNamesInput
+      .split(',')
+      .map((name) => new Coach(name.trim()));
   }
 }
 
