@@ -7,6 +7,7 @@ const { UNAVAILABLE_MENU_COUNT_RANGE } = require('./constants/rule');
 class Coach {
   #name;
   #unavailableMenus;
+  #selectedMenus = [];
 
   constructor(input) {
     const trimmedInput = input.trim();
@@ -39,7 +40,7 @@ class Coach {
     }
   }
 
-  pickMenu(options) {
+  pickMenu(options, index) {
     const numberArray = Array.from({ length: options.length }, (v, i) => i);
     let selectedMenuIndex = Random.shuffle(numberArray)[0];
     let selectedMenu = options[selectedMenuIndex];
@@ -49,7 +50,11 @@ class Coach {
       selectedMenu = options[selectedMenuIndex];
     }
 
-    return selectedMenu;
+    this.#selectedMenus[index] = selectedMenu;
+  }
+
+  get selectedMenus() {
+    return [...this.#selectedMenus];
   }
 }
 

@@ -7,7 +7,6 @@ const { isLengthOverMin, isLengthUnderMax } = require('./utils/validationUtil');
 class SuggestManager {
   #coaches;
   #menu;
-  #result = [{ category: '', coaches: [] }];
 
   constructor() {}
 
@@ -38,31 +37,33 @@ class SuggestManager {
   }
 
   pickMenus() {
+    const categoryResult = [];
+
     const duplicateCount = new Map();
     for (let i = 0; i < 5; i++) {
-      let category = this.#pickCategory(duplicateCount);
+      let category = this.#pickCategory(duplicateCount, categoryResult);
       while (duplicateCount.get(category) > 2) {
-        category = this.#pickCategory(duplicateCount);
+        category = this.#pickCategory(duplicateCount, categoryResult);
       }
 
-      let coachesPick = [];
       this.#coaches.forEach((coach) => {
-        const menu = coach.pickMenu(category.menus);
-        coachesPick.push({ name: coach.name, menu });
+        coach.pickMenu(category.menus, i);
       });
 
-      this.#result[i] = {
-        category: category.categoryName,
-        coaches: coachesPick,
-      };
+      categoryResult[i] = category.categoryName;
     }
+
+    const coachesResult = this.#coaches.map((coach) => {
+      return { name: coach.name, menus: coach.selectedMenus };
+    });
+    return { categoryResult, coachesResult };
   }
 
-  #pickCategory(duplicateCount) {
+  #pickCategory(duplicateCount, categoryResult) {
     const pickedCategory = this.#menu.pickCategories();
     const pickedCategoryName = pickedCategory.categoryName;
 
-    const isPicked = this.#result.some(
+    const isPicked = categoryResult.some(
       ({ category }) => category === pickedCategoryName,
     );
     if (isPicked) {
