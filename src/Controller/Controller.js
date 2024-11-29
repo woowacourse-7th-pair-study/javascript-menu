@@ -13,7 +13,9 @@ class Controller {
     const cantEatMenu = await this.#getValidatedCantEatMenu(coachNames);
 
     const menuRecommendMachine = new MenuRecommendMachine(coachNames);
-    menuRecommendMachine.chooseRandomCategory();
+    coachNames.forEach((name) => {
+      menuRecommendMachine.chooseRecommendMenu(name);
+    });
   }
 
   #printStart() {
