@@ -1,5 +1,7 @@
 import { ERROR_MESSAGE } from '../constant/error.js';
 import { throwWoowaError } from '../util/error.js';
+import { validateCantEatMenu } from '../validator/validateCantEatMenu.js';
+import { validateCoachNames } from '../validator/validateCoachNames.js';
 import Input from '../View/Input.js';
 import Output from '../View/Output.js';
 
@@ -19,28 +21,10 @@ class Controller {
   #getValidatedCoachNames() {
     return Input.getCoachNames()((input) => {
       const names = input.split(',').map((name) => name.trim());
-      this.#validateCoachNames(names);
+      validateCoachNames(names);
 
       return names;
     });
-  }
-
-  #validateCoachNames(names) {
-    if (names.length < 2 || names.length > 5)
-      throwWoowaError(ERROR_MESSAGE.invalidCoachNumberOfPeople);
-
-    if (new Set(names).size !== names.length)
-      throwWoowaError(ERROR_MESSAGE.invalidCoachNameDuplicate);
-
-    names.forEach((name) => {
-      this.#validateEachName(name);
-    });
-  }
-
-  #validateEachName(name) {
-    const nameLength = name.length;
-    if (nameLength < 2 || nameLength > 4)
-      throwWoowaError(ERROR_MESSAGE.invalidCoachNameLength);
   }
 
   async #getValidatedCantEatMenu(coachNames) {
@@ -48,7 +32,7 @@ class Controller {
     for (const name of coachNames) {
       const cantEatMenu = await Input.getCantEatMenu(name)((input) => {
         const cantEatMenuArray = input.split(',');
-        this.#validateCantEatMenu(cantEatMenuArray);
+        validateCantEatMenu(cantEatMenuArray);
 
         return cantEatMenuArray;
       });
@@ -57,11 +41,6 @@ class Controller {
     }
 
     return cantEatMenus;
-  }
-
-  #validateCantEatMenu(menus) {
-    if (menus.length < 0 || menus.length > 2)
-      throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
   }
 }
 
