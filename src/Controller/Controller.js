@@ -58,7 +58,6 @@ class Controller {
     coachNames.forEach((name) => {
       this.#result[name] = [];
     });
-    this.#result.category = [];
     DAYS.forEach(() => {
       const { category, menus } =
         this.#menuRecommendMachine.chooseRecommendMenu(coachNames, cantEatMenu);
