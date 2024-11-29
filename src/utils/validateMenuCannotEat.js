@@ -14,7 +14,7 @@ const isDuplicate = (menuCannotEat) => {
 /**
  * 
  * @param {string} eachMenu // 코치가 못 먹는 메뉴
- * @param {Array<{ kind: string, menus: Array<string>}>} allMenus 
+ * @param {Array<{ category: string, menus: Array<string>}>} allMenus 
  */
 const isExists = (eachMenu, allMenus) => {
   let checkExists = 0;
@@ -31,7 +31,7 @@ const isExists = (eachMenu, allMenus) => {
 /**
  * 
  * @param {Array<string>} menuCannotEat 
- * @param {Array<{ kind: string, menus: Array<string>}>} allMenus 
+ * @param {Array<{ category: string, menus: Array<string>}>} allMenus 
  */
 const validateMenuCannotEat = (menuCannotEat, allMenus) => {
   isNumOfMenus(menuCannotEat);
