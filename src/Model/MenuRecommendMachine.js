@@ -25,7 +25,11 @@ class MenuRecommendMachine {
       randomCategory = this.#chooseRandomCategory();
     }
 
-    const menu = this.#chooseRandomMenuInCategory(randomCategory);
+    let menu = this.#chooseRandomMenuInCategory(randomCategory);
+
+    while (this.#eatenMenuList[name][randomCategory].includes(menu)) {
+      menu = his.#chooseRandomMenuInCategory(randomCategory);
+    }
 
     this.#eatenMenuList[name][randomCategory] = [
       ...this.#eatenMenuList[name][randomCategory],
