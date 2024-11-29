@@ -20,12 +20,19 @@ class Controller {
       if (names.length < 2 || names.length > 5)
         throwWoowaError('코치의 인원수는 최소 2명, 최대 5명이어야 합니다.');
 
+      if (new Set(names).size !== names.length)
+        throwWoowaError('코치 이름이 중복되면 안됩니다.');
+
       names.forEach((name) => {
-        const nameLength = name.length;
-        if (nameLength < 2 || nameLength > 4)
-          throwWoowaError('이름이 2자이상, 4자 이하여야 합니다.');
+        this.#validateEachName(name);
       });
     });
+  }
+
+  #validateEachName(name) {
+    const nameLength = name.length;
+    if (nameLength < 2 || nameLength > 4)
+      throwWoowaError('이름이 2자이상, 4자 이하여야 합니다.');
   }
 }
 
