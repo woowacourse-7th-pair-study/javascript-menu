@@ -51,7 +51,7 @@ describe('점심 메뉴 테스트', () => {
 	});
 
 	describe('전체 기능 테스트', () => {
-		test('카테고리 메뉴 중복 없는 추천', () => {
+		test('카테고리 메뉴 중복 없는 추천', async () => {
 			const logSpy = getLogSpy();
 
 			mockRandoms([2, 5, 1, 3, 4]);
@@ -75,8 +75,9 @@ describe('점심 메뉴 테스트', () => {
 			]);
 
 			const app = new App();
-			app.run();
+			await app.run();
 			const log = getOutput(logSpy);
+			console.log(log);
 
 			expect(log.replace(/\n/g, '')).toEqual(
 				expect.stringContaining(
