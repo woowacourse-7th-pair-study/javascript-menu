@@ -1,5 +1,13 @@
+import Output from '../View/Output.js';
+
 class Controller {
-  start() {}
+  start() {
+    this.#printStart();
+  }
+
+  #printStart() {
+    Output.printStartMessage();
+  }
 }
 
 export default Controller;
