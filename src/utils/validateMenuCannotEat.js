@@ -1,13 +1,15 @@
+import { ERROR_MESSAGES } from '../constants/constants.js';
+
 const isNumOfMenus = (menuCannotEat) => {
   if ((menuCannotEat.length < 0 || menuCannotEat.length > 2)) {
-    throw new Error('[ERROR] 각 코치별 못 먹는 메뉴 개수는 0 ~ 2개 사이여야 합니다. 다시 입력해 주세요.');
+    throw new Error(ERROR_MESSAGES.NUM_OF_MENUS);
   }
 }
 
 const isDuplicate = (menuCannotEat) => {
   const menuCannotEatSet = new Set(menuCannotEat);
   if (menuCannotEat.length !== menuCannotEatSet.size) {
-    throw new Error('[ERROR] 메뉴 이름은 중복될 수 없습니다. 다시 입력해 주세요.');
+    throw new Error(ERROR_MESSAGES.DUPLICATE_MENUS);
   }
 }
 
@@ -24,7 +26,7 @@ const isExists = (eachMenu, allMenus) => {
   });
 
   if (checkExists === 0) {
-    throw new Error('[ERROR] 존재하지 않는 메뉴입니다. 다시 입력해 주세요.');
+    throw new Error(ERROR_MESSAGES.NON_EXIST);
   }
 }
 

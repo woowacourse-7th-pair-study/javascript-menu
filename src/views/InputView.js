@@ -1,4 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
+import { INPUT_MESSAGES } from '../constants/constants.js';
 
 const readPipe = (promptMessage) => {
   try {
@@ -10,11 +11,11 @@ const readPipe = (promptMessage) => {
 
 const InputView = {
   async readCoachesName() {
-    return await readPipe('\n코치의 이름을 입력해 주세요. (, 로 구분)\n');
+    return await readPipe(INPUT_MESSAGES.COACH_NAME);
   },
 
   async readMenuCannotEat(name) {
-    return await readPipe(`\n${name}(이)가 못 먹는 메뉴를 입력해 주세요.\n`);
+    return await readPipe(INPUT_MESSAGES.MENU(name));
   },
 }
 
