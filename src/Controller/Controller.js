@@ -17,6 +17,9 @@ class Controller {
     Input.getCoachNames()((input) => {
       const names = input.split(',').map((name) => name.trim());
 
+      if (names.length < 2 || names.length > 5)
+        throwWoowaError('코치의 인원수는 최소 2명, 최대 5명이어야 합니다.');
+
       names.forEach((name) => {
         const nameLength = name.length;
         if (nameLength < 2 || nameLength > 4)
