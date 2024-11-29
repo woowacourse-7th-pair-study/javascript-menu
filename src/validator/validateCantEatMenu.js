@@ -1,11 +1,13 @@
 import { ERROR_MESSAGE } from '../constant/error.js';
 import { SAMPLE } from '../App.js';
 import { throwWoowaError } from '../util/error.js';
+import { RULE } from '../constant/ruls.js';
 
 export const validateCantEatMenu = (menus) => {
-  if (menus.length > 2) throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
+  if (menus.length > RULE.menuMaxLength)
+    throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuLength);
 
-  if (menus.length === 2 && menus[0] === menus[1])
+  if (menus.length === RULE.menuMaxLength && menus[0] === menus[1])
     throwWoowaError(ERROR_MESSAGE.invalidCantEatMenuDuplicate);
 
   menus.forEach((menu) => {

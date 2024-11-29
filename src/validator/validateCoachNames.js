@@ -1,8 +1,9 @@
 import { ERROR_MESSAGE } from '../constant/error.js';
+import { RULE } from '../constant/ruls.js';
 import { throwWoowaError } from '../util/error.js';
 
 export const validateCoachNames = (names) => {
-  if (names.length < 2 || names.length > 5)
+  if (names.length < RULE.coachNum.min || names.length > RULE.coachNum.max)
     throwWoowaError(ERROR_MESSAGE.invalidCoachNumberOfPeople);
 
   if (new Set(names).size !== names.length)
@@ -10,7 +11,7 @@ export const validateCoachNames = (names) => {
 
   names.forEach((name) => {
     const nameLength = name.length;
-    if (nameLength < 2 || nameLength > 4)
+    if (nameLength < RULE.coachName.min || nameLength > RULE.coachName.max)
       throwWoowaError(ERROR_MESSAGE.invalidCoachNameLength);
   });
 };

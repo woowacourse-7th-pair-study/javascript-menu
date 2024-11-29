@@ -20,7 +20,6 @@ class Controller {
     const cantEatMenu = await this.#getValidatedCantEatMenu(coachNames);
 
     this.#menuRecommendMachine = new MenuRecommendMachine(coachNames);
-
     this.#recommendMenuPerCoach(coachNames, cantEatMenu);
 
     this.#printResult(coachNames);
