@@ -4,10 +4,10 @@ import Input from '../View/Input.js';
 import Output from '../View/Output.js';
 
 class Controller {
-  start() {
+  async start() {
     this.#printStart();
 
-    const coachNames = this.#getValidatedCoachNames();
+    const coachNames = await this.#getValidatedCoachNames();
   }
 
   #printStart() {
@@ -15,7 +15,7 @@ class Controller {
   }
 
   #getValidatedCoachNames() {
-    Input.getCoachNames()((input) => {
+    return Input.getCoachNames()((input) => {
       const names = input.split(',').map((name) => name.trim());
       this.#validateCoachNames(names);
 
