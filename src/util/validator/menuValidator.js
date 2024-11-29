@@ -12,11 +12,11 @@ const validateMenu = (menus) => {
 const isNotExist = (menu) => {
   let exist = false;
 
-  for (const key of Object.entries(MENU)) {
+  for (const [key] of Object.entries(MENU)) {
     if (MENU[key].includes(menu)) {
       exist = true;
 
-      return;
+      break;
     }
   }
   if (!exist) {
