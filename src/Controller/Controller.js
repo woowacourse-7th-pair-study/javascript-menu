@@ -7,6 +7,7 @@ import Output from '../View/Output.js';
 
 class Controller {
   #menuRecommendMachine;
+  #resultCategory = [];
   #result = {};
 
   async start() {
@@ -57,13 +58,12 @@ class Controller {
     coachNames.forEach((name) => {
       this.#result[name] = [];
     });
-
+    this.#result.category = [];
     DAYS.forEach(() => {
-      coachNames.forEach((name) => {
-        const recommendedMenu = this.#menuRecommendMachine.chooseRecommendMenu(
-          name,
-          cantEatMenu[name],
-        );
+      const { category, menus } =
+        this.#menuRecommendMachine.chooseRecommendMenu(coachNames, cantEatMenu);
+      this.#resultCategory.push(category);
+      menus.forEach(([name, recommendedMenu]) => {
         this.#result[name] = [...this.#result[name], recommendedMenu];
       });
     });
@@ -71,7 +71,7 @@ class Controller {
 
   #printResult(coachNames) {
     Output.printResultStartMessage();
-    Output.printResultHeader();
+    Output.printResultHeader(this.#resultCategory);
     coachNames.forEach((name) => {
       Output.printRecommendMenuPerCoach(name, this.#result[name]);
     });

@@ -10,9 +10,9 @@ class Output {
     Console.print(CONSOLE_MESSAGE.resultStartMessage);
   }
 
-  static printResultHeader() {
+  static printResultHeader(category) {
     Console.print('[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]');
-    Console.print('[ 카테고리 | 한식 | 한식 | 일식 | 중식 | 아시안 ]');
+    Console.print(`[ 카테고리 | ${category.join(' | ')} ]`);
   }
 
   static printRecommendMenuPerCoach(coachName, result) {

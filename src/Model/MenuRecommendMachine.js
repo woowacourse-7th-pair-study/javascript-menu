@@ -4,6 +4,7 @@ import { SAMPLE } from '../App.js';
 class MenuRecommendMachine {
   #category;
   #allMenu = {};
+  #eatenCategory = {};
   #eatenMenuList = {};
 
   constructor(coachNames) {
@@ -11,35 +12,39 @@ class MenuRecommendMachine {
     Object.entries(SAMPLE).forEach(([category, menus]) => {
       this.#allMenu[category] = menus.split(', ');
     });
+    Object.keys(SAMPLE).forEach((category) => {
+      this.#eatenCategory[category] = 0;
+    });
     coachNames.forEach((name) => {
-      this.#eatenMenuList[name] = Object.fromEntries(
-        this.#category.map((value) => [value, []]),
-      );
+      this.#eatenMenuList[name] = [];
     });
   }
 
-  chooseRecommendMenu(name, cantEatMenu) {
+  chooseRecommendMenu(names, cantEatMenu) {
     let randomCategory = this.#chooseRandomCategory();
 
-    while (this.#eatenMenuList[name][randomCategory] === 2) {
+    while (this.#eatenCategory[randomCategory] === 2) {
       randomCategory = this.#chooseRandomCategory();
     }
 
-    let menu = this.#chooseRandomMenuInCategory(randomCategory);
+    this.#eatenCategory[randomCategory] += 1;
 
-    while (
-      this.#eatenMenuList[name][randomCategory].includes(menu) ||
-      cantEatMenu.includes(menu)
-    ) {
-      menu = this.#chooseRandomMenuInCategory(randomCategory);
-    }
+    const menus = names.map((name) => {
+      let menu = this.#chooseRandomMenuInCategory(randomCategory);
 
-    this.#eatenMenuList[name][randomCategory] = [
-      ...this.#eatenMenuList[name][randomCategory],
-      menu,
-    ];
+      while (
+        this.#eatenMenuList[name].includes(menu) ||
+        cantEatMenu[name].includes(menu)
+      ) {
+        menu = this.#chooseRandomMenuInCategory(randomCategory);
+      }
 
-    return menu;
+      this.#eatenMenuList[name] = [...this.#eatenMenuList[name], menu];
+
+      return [name, menu];
+    });
+
+    return { category: randomCategory, menus };
   }
 
   #chooseRandomCategory() {
@@ -50,9 +55,9 @@ class MenuRecommendMachine {
 
   #chooseRandomMenuInCategory(category) {
     const randomMenuIndex = Random.shuffle(
-      this.#allMenu[category].map((_, index) => index),
+      Array.from({ length: 9 }, (_, idx) => idx + 1),
     )[0];
-    return this.#allMenu[category][randomMenuIndex];
+    return this.#allMenu[category][randomMenuIndex - 1];
   }
 }
 
