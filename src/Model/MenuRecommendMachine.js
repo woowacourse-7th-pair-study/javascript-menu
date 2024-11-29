@@ -18,7 +18,7 @@ class MenuRecommendMachine {
     });
   }
 
-  chooseRecommendMenu(name) {
+  chooseRecommendMenu(name, cantEatMenu) {
     let randomCategory = this.#chooseRandomCategory();
 
     while (this.#eatenMenuList[name][randomCategory] === 2) {
@@ -27,7 +27,10 @@ class MenuRecommendMachine {
 
     let menu = this.#chooseRandomMenuInCategory(randomCategory);
 
-    while (this.#eatenMenuList[name][randomCategory].includes(menu)) {
+    while (
+      this.#eatenMenuList[name][randomCategory].includes(menu) ||
+      cantEatMenu.includes(menu)
+    ) {
       menu = this.#chooseRandomMenuInCategory(randomCategory);
     }
 

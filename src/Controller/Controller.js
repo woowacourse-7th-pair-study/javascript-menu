@@ -14,7 +14,7 @@ class Controller {
 
     const menuRecommendMachine = new MenuRecommendMachine(coachNames);
     coachNames.forEach((name) => {
-      menuRecommendMachine.chooseRecommendMenu(name);
+      menuRecommendMachine.chooseRecommendMenu(name, cantEatMenu[name]);
     });
   }
 
@@ -32,7 +32,7 @@ class Controller {
   }
 
   async #getValidatedCantEatMenu(coachNames) {
-    const cantEatMenus = [];
+    const cantEatMenus = {};
     for (const name of coachNames) {
       const cantEatMenu = await Input.getCantEatMenu(name)((input) => {
         if (input === '') return [];
@@ -42,7 +42,7 @@ class Controller {
         return cantEatMenuArray;
       });
 
-      cantEatMenus.push(cantEatMenu);
+      cantEatMenus[name] = cantEatMenu;
     }
 
     return cantEatMenus;
