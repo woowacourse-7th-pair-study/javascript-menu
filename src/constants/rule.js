@@ -1,0 +1,5 @@
+const COACH_COUNT_RANGE = { min: 2, max: 5 };
+const COACH_NAME_COUNT_RANGE = { min: 2, max: 4 };
+
+exports.COACH_COUNT_RANGE = COACH_COUNT_RANGE;
+exports.COACH_NAME_COUNT_RANGE = COACH_NAME_COUNT_RANGE;

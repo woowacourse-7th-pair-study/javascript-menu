@@ -1,11 +1,5 @@
-const Coach = require('./Coach.js');
+const { SuggestManager } = require('./SuggestManager.js');
 const View = require('./View.js');
-const { ERROR_MESSAGE } = require('./constants/errorMessage.js');
-const { splitString } = require('./utils/commonUtil.js');
-const {
-  isLengthOverMin,
-  isLengthUnderMax,
-} = require('./utils/validationUtil.js');
 
 const SAMPLE = {
   일식: '규동, 우동, 미소시루, 스시, 가츠동, 오니기리, 하이라이스, 라멘, 오코노미야끼',
@@ -17,7 +11,7 @@ const SAMPLE = {
 };
 
 class App {
-  #coaches;
+  #suggestManager;
 
   async play() {
     View.printStartMessage();
@@ -27,16 +21,7 @@ class App {
   async #getCoachNames() {
     try {
       const coachNamesInput = await View.readCoachName();
-      const splittedCoachNames = splitString(coachNamesInput, ',');
-
-      if (!isLengthOverMin(2, splittedCoachNames)) {
-        throw new Error(ERROR_MESSAGE.coachCountUnderMin);
-      }
-      if (!isLengthUnderMax(5, splittedCoachNames)) {
-        throw new Error(ERROR_MESSAGE.coachCountOverMax);
-      }
-
-      this.#coaches = splittedCoachNames.map((name) => new Coach(name));
+      this.#suggestManager = new SuggestManager(coachNamesInput);
     } catch (error) {
       View.printMessage(error.message);
       await this.#getCoachNames();
