@@ -1,7 +1,7 @@
 import { MissionUtils } from '@woowacourse/mission-utils';
 import App from '../src/App.js';
 
-const mockQuestions = (inputs) => {
+export const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
 
   MissionUtils.Console.readLineAsync.mockImplementation(() => {
@@ -11,7 +11,7 @@ const mockQuestions = (inputs) => {
   });
 };
 
-const mockRandoms = (numbers) => {
+export const mockRandoms = (numbers) => {
   MissionUtils.Random.pickNumberInRange = jest.fn();
   numbers.reduce(
     (acc, number) => acc.mockReturnValueOnce(number),
@@ -19,7 +19,7 @@ const mockRandoms = (numbers) => {
   );
 };
 
-const mockShuffles = (rows) => {
+export const mockShuffles = (rows) => {
   MissionUtils.Random.shuffle = jest.fn();
   rows.reduce(
     (acc, [firstNumber, numbers]) =>
@@ -31,7 +31,7 @@ const mockShuffles = (rows) => {
   );
 };
 
-const getLogSpy = () => {
+export const getLogSpy = () => {
   const logSpy = jest.spyOn(MissionUtils.Console, 'print');
   logSpy.mockClear();
   return logSpy;
