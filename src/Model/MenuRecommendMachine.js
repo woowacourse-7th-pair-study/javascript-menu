@@ -23,7 +23,14 @@ class MenuRecommendMachine {
 
     const menu = this.#chooseRandomMenuInCategory(randomCategory);
 
-    Console.print(menu);
+    this.#eatenMenuList[name][randomCategory] = [
+      ...this.#eatenMenuList[name][randomCategory],
+      menu,
+    ];
+
+    Console.print(this.#eatenMenuList);
+
+    return menu;
   }
 
   #chooseRandomCategory() {
