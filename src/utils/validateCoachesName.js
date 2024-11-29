@@ -1,10 +1,7 @@
-
-const isNameLength = (coachesName) => {
-  coachesName.forEach((name) => {
-    if (name.length < 2 || name.length > 4) {
-      throw new Error('[ERROR] 코치 이름은 2에서 4글자 사이여야 합니다. 다시 입력해 주세요.');
-    }
-  });
+const isNameLength = (name) => {
+  if (name.length < 2 || name.length > 4) {
+    throw new Error('[ERROR] 코치 이름은 2에서 4글자 사이여야 합니다. 다시 입력해 주세요.');
+  }
 }
 
 const isNumOfCoaches = (coachesName) => {
@@ -21,7 +18,7 @@ const isDuplicate = (coachesName) => {
 }
 
 const validateCoachesName = (coachesName) => {
-  isNameLength(coachesName);
+  coachesName.forEach((name) => isNameLength(name));
   isNumOfCoaches(coachesName);
   isDuplicate(coachesName);
 }

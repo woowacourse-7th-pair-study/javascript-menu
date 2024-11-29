@@ -1,5 +1,3 @@
-
-
 const stringToArray = (string) => {
   return string.split(',').map((name) => name.trim());
 }
