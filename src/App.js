@@ -12,6 +12,8 @@ const SAMPLE = {
 class App {
   play() {
     OutputView.printStartMessage();
+
+    OutputView.printEnd();
   }
 }
 
