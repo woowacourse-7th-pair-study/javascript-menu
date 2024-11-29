@@ -1,21 +1,53 @@
 const { Console } = require('@woowacourse/mission-utils');
 const { ERROR_MESSAGE } = require('./constants/errorMessage');
+const SuggestManager = require('./SuggestManager');
 
-class View {
-  static printStartMessage() {
+const suggestManager = new SuggestManager();
+
+const View = {
+  printStartMessage() {
     Console.print('점심 메뉴 추천을 시작합니다.');
-  }
+  },
 
-  static printMessage(message) {
+  printMessage(message) {
     Console.print(message);
-  }
+  },
 
-  static async readCoachName() {
-    const input = await Console.readLineAsync(
-      '코치의 이름을 입력해 주세요. (, 로 구분)',
+  readCoachName() {
+    Console.readLine(
+      '\n코치의 이름을 입력해 주세요. (, 로 구분)\n',
+      (input) => {
+        try {
+          if (input.trim() === '') throw new Error(ERROR_MESSAGE.noBlank);
+
+          suggestManager.setCoaches(input);
+
+          this.readUnavailableMenus(0);
+        } catch (error) {
+          this.printMessage(error.message);
+          this.readCoachName();
+        }
+      },
     );
-    if (input.trim() === '') throw new Error(ERROR_MESSAGE.noBlank);
-  }
-}
+  },
+
+  readUnavailableMenus(i) {
+    const coachNames = suggestManager.getCoachNames();
+
+    Console.readLine(
+      `\n${coachNames[i]} (이)가 못 먹는 메뉴를 입력해 주세요.\n`,
+      (menu) => {
+        try {
+          suggestManager.setCoachUnavailableMenus(coachNames[i], menu);
+          if (coachNames[++i]) this.readUnavailableMenus(i);
+          return;
+        } catch (error) {
+          this.printMessage(error.message);
+          this.readUnavailableMenus();
+        }
+      },
+    );
+  },
+};
 
 module.exports = View;

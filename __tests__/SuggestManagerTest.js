@@ -1,5 +1,5 @@
 const ERROR_MESSAGE = require('../src/constants/errorMessage.js');
-const { SuggestManager } = require('../src/SuggestManager.js');
+const SuggestManager = require('../src/SuggestManager.js');
 
 const errorCase = [
   {
@@ -16,12 +16,19 @@ const errorCase = [
     errorMessage: ERROR_MESSAGE.coachCountOverMax,
   },
 ];
+describe('SuggestManager 테스트', () => {
+  let suggestManager;
 
-test.each(errorCase)(
-  '$caseName 예외가 발생한다.',
-  async ({ inputs, errorMessage }) => {
-    inputs.forEach(async (input) => {
-      await expect(() => new SuggestManager(input)).toThrow(errorMessage);
-    });
-  },
-);
+  beforeEach(() => {
+    suggestManager = new SuggestManager();
+  });
+
+  test.each(errorCase)(
+    '$caseName 예외가 발생한다.',
+    ({ inputs, errorMessage }) => {
+      inputs.forEach(async (input) => {
+        expect(() => suggestManager.setCoaches(input)).toThrow(errorMessage);
+      });
+    },
+  );
+});

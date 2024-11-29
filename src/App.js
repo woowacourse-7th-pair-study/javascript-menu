@@ -1,4 +1,3 @@
-const { SuggestManager } = require('./SuggestManager.js');
 const View = require('./View.js');
 
 const SAMPLE = {
@@ -11,21 +10,9 @@ const SAMPLE = {
 };
 
 class App {
-  #suggestManager;
-
-  async play() {
+  play() {
     View.printStartMessage();
-    await this.#getCoachNames();
-  }
-
-  async #getCoachNames() {
-    try {
-      const coachNamesInput = await View.readCoachName();
-      this.#suggestManager = new SuggestManager(coachNamesInput);
-    } catch (error) {
-      View.printMessage(error.message);
-      await this.#getCoachNames();
-    }
+    View.readCoachName();
   }
 }
 
