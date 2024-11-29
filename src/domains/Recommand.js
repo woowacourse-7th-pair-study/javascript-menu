@@ -13,10 +13,10 @@ class Recommand {
   getRecommandedMenus(menuCannotEat, categorys, allMenus) {
     categorys.forEach((eachCategory) => {
       const menusByCategory = allMenus.filter(({ category }) => category === eachCategory)[0].menus;
-      const indexArray = Array.from({ length: menusByCategory.length }, (_, i) => i);
+      const indexArray = Array.from({ length: menusByCategory.length }, (_, i) => i + 1);
       const recommandedMenuIndex = this.#recommandMenuIndex(indexArray, menusByCategory, menuCannotEat);
 
-      this.#recommandedMenus.push(menusByCategory[recommandedMenuIndex]);
+      this.#recommandedMenus.push(menusByCategory[recommandedMenuIndex - 1]);
     });
     return this.#recommandedMenus;
   }
@@ -33,8 +33,8 @@ class Recommand {
     do {
       recommandedMenuIndex = Random.shuffle(indexArray)[0];
     } while (
-      this.#checkDuplicateMenu(menusByCategory[recommandedMenuIndex]) 
-      || this.#checkCannotEatMenu(menuCannotEat, menusByCategory[recommandedMenuIndex])
+      this.#checkDuplicateMenu(menusByCategory[recommandedMenuIndex - 1]) 
+      || this.#checkCannotEatMenu(menuCannotEat, menusByCategory[recommandedMenuIndex - 1])
     );
     return recommandedMenuIndex;
   }
