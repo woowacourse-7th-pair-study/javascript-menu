@@ -39,6 +39,8 @@
   - [x] 통합 테스트
   - [x] 단위 테스트
     - [x] Recommand 클래스 테스트
+    - [x] validateCoachesName 메서드 테스트
+    - [x] validateMenuCannotEat 메서드 테스트
 
 ## 기타
 
