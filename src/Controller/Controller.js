@@ -1,5 +1,4 @@
-import { ERROR_MESSAGE } from '../constant/error.js';
-import { throwWoowaError } from '../util/error.js';
+import MenuRecommendMachine from '../Model/MenuRecommendMachine.js';
 import { validateCantEatMenu } from '../validator/validateCantEatMenu.js';
 import { validateCoachNames } from '../validator/validateCoachNames.js';
 import Input from '../View/Input.js';
@@ -12,6 +11,9 @@ class Controller {
     const coachNames = await this.#getValidatedCoachNames();
 
     const cantEatMenu = await this.#getValidatedCantEatMenu(coachNames);
+
+    const menuRecommendMachine = new MenuRecommendMachine();
+    menuRecommendMachine.chooseRandomCategory();
   }
 
   #printStart() {
