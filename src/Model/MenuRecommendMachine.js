@@ -20,22 +20,16 @@ class MenuRecommendMachine {
     });
   }
 
-  chooseRecommendMenu(names, cantEatMenu) {
+  chooseRecommendMenu(names, cantEatMenus) {
     const randomCategory = this.#chooseRandomCategory();
     this.#eatenCategory[randomCategory] += 1;
-
     const menus = names.map((name) => {
-      let menu = this.#chooseRandomMenuInCategory(randomCategory);
-
-      while (
-        this.#eatenMenuList[name].includes(menu) ||
-        cantEatMenu[name].includes(menu)
-      ) {
-        menu = this.#chooseRandomMenuInCategory(randomCategory);
-      }
-
+      const menu = this.#chooseRandomMenuInCategory(
+        randomCategory,
+        name,
+        cantEatMenus[name],
+      );
       this.#eatenMenuList[name] = [...this.#eatenMenuList[name], menu];
-
       return [name, menu];
     });
 
@@ -58,11 +52,25 @@ class MenuRecommendMachine {
     return randomIndex - 1;
   }
 
-  #chooseRandomMenuInCategory(category) {
+  #chooseRandomMenuInCategory(category, name, cantEatMenu) {
+    const categoryMenu = this.#allMenu[category];
+    let menuIndex = this.#chooseRandomMenuIndex(categoryMenu);
+
+    while (
+      this.#eatenMenuList[name].includes(categoryMenu[menuIndex]) ||
+      cantEatMenu.includes(categoryMenu[menuIndex])
+    ) {
+      menuIndex = this.#chooseRandomMenuInCategory(categoryMenu);
+    }
+
+    return categoryMenu[menuIndex];
+  }
+
+  #chooseRandomMenuIndex(categoryMenu) {
     const randomMenuIndex = Random.shuffle(
-      this.#allMenu[category].map((_, index) => index + 1),
+      categoryMenu.map((_, index) => index + 1),
     )[0];
-    return this.#allMenu[category][randomMenuIndex - 1];
+    return randomMenuIndex - 1;
   }
 }
 
