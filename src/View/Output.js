@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { CONSOLE_MESSAGE } from '../constant/message.js';
+import { DAYS } from '../constant/days.js';
 
 class Output {
   static printStartMessage() {
@@ -11,7 +12,7 @@ class Output {
   }
 
   static printResultHeader(category) {
-    Console.print('[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]');
+    Console.print(`[ 구분 | ${DAYS.join(' | ')} ]`);
     Console.print(`[ 카테고리 | ${category.join(' | ')} ]`);
   }
 
