@@ -21,12 +21,7 @@ class MenuRecommendMachine {
   }
 
   chooseRecommendMenu(names, cantEatMenu) {
-    let randomCategory = this.#chooseRandomCategory();
-
-    while (this.#eatenCategory[randomCategory] === 2) {
-      randomCategory = this.#chooseRandomCategory();
-    }
-
+    const randomCategory = this.#chooseRandomCategory();
     this.#eatenCategory[randomCategory] += 1;
 
     const menus = names.map((name) => {
@@ -48,9 +43,19 @@ class MenuRecommendMachine {
   }
 
   #chooseRandomCategory() {
+    let randomCategoryIndex = this.#chooseRandomCategoryIndex();
+
+    while (this.#eatenCategory[this.#category[randomCategoryIndex]] === 2) {
+      randomCategoryIndex = this.#chooseRandomCategoryIndex();
+    }
+
+    return this.#category[randomCategoryIndex];
+  }
+
+  #chooseRandomCategoryIndex() {
     const randomIndex = Random.pickNumberInRange(1, 5);
 
-    return this.#category[randomIndex - 1];
+    return randomIndex - 1;
   }
 
   #chooseRandomMenuInCategory(category) {
